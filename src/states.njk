@@ -1,0 +1,15 @@
+---
+layout: base.njk
+title: States Info
+---
+
+<div class="container mx-auto">
+    <div class="mt-16">
+
+        {% for state in statesCurrent %}
+            <div class="p-8 rounded shadow-md mb-8">
+                <div class="text-xl">{{ state.state }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
