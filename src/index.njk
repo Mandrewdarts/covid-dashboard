@@ -1,6 +1,7 @@
 ---
 layout: base.njk
-title: Home
+renderData:
+    title: Home
 ---
 
 {% set current = current[0] %}
@@ -36,24 +37,7 @@ title: Home
     </div>
 {% endmacro %}
 
-{% macro statCardField(bgColor, label, stat, increase = '') %}
-    <div class="px-4 py-2 {{ bgColor }} sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-        <dt class="text-sm font-medium text-gray-500">
-            {{ label }}
-        </dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            <span class="mr-4">{{ stat | number }}</span>
-            {% if increase %}
-                <span class="relative flex-1 text-green-500">
-                    +{{ increase | number }}
-                </span>
-            {% endif %}
-        </dd>
-    </div>
-{% endmacro %}
-
 <div class="container mx-8 mx-auto mt-16 mb-16">
-
     <div class="items-start block md:flex">
         <div class="flex-1 mx-4 mb-8 overflow-hidden bg-white shadow sm:rounded-lg md:mb-0">
             <div class="px-4 py-5 sm:px-6">
@@ -105,40 +89,17 @@ title: Home
 
     </div>
 
-    <hr class="mt-16 mb-16">
+    {# <hr class="mt-16 mb-16">
 
-    <div class="max-w-3xl mx-auto">
-        <h2 class="mt-16 text-3xl">States</h2>
-
-        <div class="mt-8">
-            {# <input type="search" placeholder="Search state" class="block w-full px-4 py-3 bg-gray-100 border-solid rounded outline-none border-1 focus:border-blue-400"> #}
-            <input type="text" name="company_website" id="company_website" class="flex-1 block w-full border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 roundedsm:text-sm" placeholder="www.example.com">
-            <div class="flex mt-2">
-                <div class="p-2 mr-2 text-sm text-white bg-blue-900 rounded">
-                    Positive
-                </div>
-                <div class="p-2 text-sm text-white bg-blue-900 rounded">
-                    Positive Increase
-                </div>
-            </div>
-
-        </div>
-        <div class="flex flex-wrap justify-between block mt-10 mb-16">
-            {% for state in statesCurrent %}
-                <div class="w-full mb-8 rounded shadow">
-                    <h3 class="mx-6 mt-6 text-xl">{{ states[state.state] }}</h3>
-                    <span class="mx-6 mt-1 text-sm italic text-gray-900">
-                        <span class="text-gray-400">Last Updated</span>
-                        <span class="text-gray-400">{{ state.dateChecked | date }}</span>
-                    </span>
-                    <div class="mt-4 mb-2">
-                        {{ statCardField('bg-white', 'Positive Cases', state.positive, state.positiveIncrease) }}
-
-                        {{ statCardField('bg-white', 'Test Results', state.totalTestResults, state.totalTestResultsIncrease) }}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+    <div class="mb-8">
+        <h2 class="text-2xl">Last 30 Days</h2>
     </div>
-
+    <div class="mb-16">
+        <canvas id="chart"></canvas>
+    </div> #}
 </div>
+
+{# {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="/js/home-page-chart.js"></script>
+{% endblock scripts %} #}

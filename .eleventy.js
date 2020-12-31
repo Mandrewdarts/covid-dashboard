@@ -1,13 +1,13 @@
-const htmlmin = require("html-minifier");
+// const htmlmin = require("html-minifier");
+const markdown = require('markdown')
+const url = require('url-parse')
 
 module.exports = function (eleventyConfig) {
     eleventyConfig.setUseGitIgnore(false);
 
-    // eleventyConfig.addWatchTarget("./_tmp/style.css");
+    eleventyConfig.addPassthroughCopy({ "./src/_data/*.json": "./data" });
 
-    // eleventyConfig.addPassthroughCopy({ "./_tmp/style.css": "./style.css" });
-
-    eleventyConfig.addPassthroughCopy({ "./src/js/app.js": "./js/app.js" });
+    eleventyConfig.addPassthroughCopy({ "./src/js/*.js": "./js" });
 
     eleventyConfig.addPassthroughCopy({
         "./node_modules/alpinejs/dist/alpine.js": "./js/alpine.js",
@@ -31,6 +31,16 @@ module.exports = function (eleventyConfig) {
 
     eleventyConfig.addNunjucksFilter('number', function (value) {
         return new Intl.NumberFormat('en-US').format(value)
+    })
+
+    eleventyConfig.addNunjucksFilter('markdown', function (value) {
+        return markdown.parse(value)
+    })
+
+
+    eleventyConfig.addNunjucksFilter('urlHost', function (value) {
+        const u = url(value)
+        return u.host
     })
 
     // eleventyConfig.addTransform("htmlmin", function (content, outputPath) {

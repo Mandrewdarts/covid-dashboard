@@ -1,15 +1,68 @@
 ---
 layout: base.njk
-title: States Info
+renderData:
+    title: States
 ---
 
-<div class="container mx-auto">
-    <div class="mt-16">
+{% macro stateCard(state) %}
+    <div class="w-full pt-1 pb-2 mb-8 rounded shadow" data-state="{{ states[state.state].toLowerCase() }}">
+        <h3 class="mx-6 mt-6 text-xl">{{ states[state.state] }}</h3>
+        <span class="mx-6 mt-1 text-sm italic text-gray-900">
+            <span class="text-gray-400">Last Updated</span>
+            <span class="text-gray-400">{{ state.dateChecked | date }}</span>
+        </span>
+        <div class="mt-4 mb-2">
+            {{ statCardField('Positive Cases', state.positive, state.positiveIncrease) }}
 
-        {% for state in statesCurrent %}
-            <div class="p-8 rounded shadow-md mb-8">
-                <div class="text-xl">{{ state.state }}</div>
+            {{ statCardField('Test Results', state.totalTestResults, state.totalTestResultsIncrease) }}
+        </div>
+
+        <div class="flex justify-end px-4 mt-4 mb-4">
+            <a href="/states/{{ states[state.state] | slug }}" class="flex items-center px-4 py-2 text-black bg-gray-200 rounded">
+                <span class="mr-2">More Info</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro statCardField(label = '', stat = '', increase = '') %}
+    <div class="px-4 py-2 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">
+            {{ label }}
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <span class="mr-4">{{ stat | number }}</span>
+            {% if increase %}
+                <span class="relative flex-1 text-green-500">
+                    +<span>{{ increase | number }}</span>
+                </span>
+            {% endif %}
+        </dd>
+    </div>
+{% endmacro %}
+
+<div class="container mx-auto">
+    <div class="mx-4 mt-16">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="mt-16 text-3xl">States</h2>
+
+            <div class="mt-8">
+                <input type="text" name="search" id="search" class="flex-1 block w-full border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 roundedsm:text-sm" placeholder="Search...">
             </div>
-        {% endfor %}
+            <div class="flex flex-wrap justify-between block mt-10 mb-16">
+                <div id="static-rendered-states" class="w-full">
+                    {% for state in statesCurrent %}
+                        {{ stateCard(state) }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+{% block scripts %}
+    <script src="/js/state-search.js"></script>
+{% endblock scripts %}

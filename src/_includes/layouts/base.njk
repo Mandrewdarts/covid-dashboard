@@ -4,26 +4,35 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <title>{{title}}
+    <meta name="state" content="{{ renderData.title }}">
+    <title>{{ renderData.title or title or metadata.title }}
       | Covid Dashboard</title>
     <link rel="stylesheet" href="{{ '/style.css' | url }}">
   </head>
   <body class="text-gray-700">
     <div class="w-full h-16 text-white bg-gray-700">
       <div class="container flex items-center h-full mx-auto">
-        <div class="flex-1 text-2xl">
-          <span class="font-semibold">Covid</span>
-          <span class="font-thin ">Dashboard</span>
+        <div class="flex-1 ml-4 text-2xl">
+          <a href="/">
+            <span class="font-semibold">Covid</span>
+            <span class="font-thin ">Dashboard</span>
+          </a>
         </div>
 
-        {# <div>
-          <a href="/dashboard" class="px-4 py-2 mr-4 text-white bg-gray-800 rounded hover:bg-gray-900">Dashboard</a>
-          <a href="/states" class="px-4 py-2 mr-4 text-white bg-gray-800 rounded hover:bg-gray-900">States</a>
-        </div> #}
+        <div>
+          <a href="/states" class="px-4 py-2 mr-4 text-white bg-gray-800 rounded hover:bg-gray-900 {% if page.url === '/states/' %} bg-gray-900 {% endif %}">States</a>
+          {# <a href="/dashboard" class="px-4 py-2 mr-4 text-white bg-gray-800 rounded hover:bg-gray-900 {% if page.url === '/dashboard/' %} bg-gray-900 {% endif %} ">Dashboard</a> #}
+        </div>
       </div>
     </div>
     {{ content | safe }}
-    <script src="{{ '/js/alpine.js' | url }}"></script>
+
     <script src="{{ '/js/app.js' | url }}"></script>
+
+    {% block scripts %}{% endblock scripts %}
+    {# <script>
+      window.statesInfo = {{ statesInfo | dump | safe }}
+      window.states = {{ states | dump | safe }}
+    </script> #}
   </body>
 </html>
