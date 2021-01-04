@@ -2,6 +2,8 @@
 const markdown = require('markdown')
 const url = require('url-parse')
 
+require('dotenv').config()
+
 module.exports = function (eleventyConfig) {
     eleventyConfig.setUseGitIgnore(false);
 
